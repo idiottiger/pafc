@@ -46,6 +46,7 @@ public final class MessageBus implements IMessageBus {
     private Set<Class<?>> mClassCache = new HashSet<Class<?>>();
 
     // current register object cache, if unreigster, will remove this object from set
+    //TODO: will use weakreference to instead of directed object reference
     private Map<Class<?>, Set<Object>> mObjectCache = new HashMap<Class<?>, Set<Object>>();
 
     // method cache
@@ -166,13 +167,10 @@ public final class MessageBus implements IMessageBus {
                 method.invoke(intanceObj, (Object[]) null);
             }
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

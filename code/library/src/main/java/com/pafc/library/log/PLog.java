@@ -5,7 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * log util class, as same as system log class, additional supply another methods:
+ * 1.
+ */
 public final class PLog {
 
     public static final int LEVEL_VERBOSE = Log.VERBOSE;
