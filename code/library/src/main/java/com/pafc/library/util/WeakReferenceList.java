@@ -19,13 +19,13 @@ public class WeakReferenceList<T> implements List<T> {
 
     }
 
-    public static <T> WeakReferenceList<T> newWeakArrayList() {
+    public static <T> WeakReferenceList<T> newWeakReferenceArrayList() {
         final WeakReferenceList<T> list = new WeakReferenceList<>();
         list.mWeakList = new ArrayList<>();
         return list;
     }
 
-    public static <T> WeakReferenceList<T> newWeakLinkedList() {
+    public static <T> WeakReferenceList<T> newWeakReferenceLinkedList() {
         final WeakReferenceList<T> list = new WeakReferenceList<>();
         list.mWeakList = new LinkedList<>();
         return list;
