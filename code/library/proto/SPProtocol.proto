@@ -1,0 +1,78 @@
+package com.pafc.library.ipc; //package name
+
+option java_outer_classname = "SPProtocol"; //class name
+
+//request and response packet
+//key-value pair, and the value type
+message Packet{
+
+    enum ValueType{ //value type
+        INT = 0;
+        STRING = 1 ;
+        LONG = 2;
+        FLOAT = 3;
+        BOOLEAN = 4;
+    }
+
+    required string key = 1;
+    required ValueType tye = 2;
+
+    optional int32 value_int = 3;
+    optional string value_string = 4;
+    optional int64 value_long = 5;
+    optional float value_float = 6;
+    optional bool value_bool = 7;
+}
+
+message Command{
+    enum CommandMethod { // command type
+            GET = 0;
+            GET_ALL = 1;
+            CHECK = 2;
+            PUT = 3;
+            PUT_ALL = 4;
+            DELETE = 5;
+            CLEAR = 6;
+    }
+}
+
+message RequestHeader {
+     required int32 major_version = 1; //major version
+     required int32 minor_version = 2; //minor version
+     required string request_uuid = 3;
+     required string target_name = 4;
+     required Command.CommandMethod command_method = 5;
+}
+
+message RequestBody {
+    repeated Packet packet_list = 1;
+}
+
+message Request{
+    required RequestHeader header = 1;
+    optional RequestBody body = 2;
+}
+
+message ResponseHeader{
+
+     enum ResponseCode {
+            CODE_OK = 0;
+            CODE_ERROR = 1;
+     }
+
+     required int32 major_version = 1; //major version
+     required int32 minor_version = 2; //minor version
+     required ResponseCode response_code = 3;
+     required string request_uuid = 4;
+     required string response_uuid = 5;
+     required Command.CommandMethod command_method = 6;
+}
+
+message ResponseBody {
+    repeated Packet packet_list = 1;
+}
+
+message Response{
+    required ResponseHeader header = 1;
+    optional ResponseBody body = 2;
+}
