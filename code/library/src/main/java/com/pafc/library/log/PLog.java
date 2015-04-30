@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * log util class, as same as system log class, additional supply another methods:
- * 1.
+ * <pre>
+ * system Log replace class
+ * 1. can config the console log visibility and the minimum level
+ * 2. can add custom {@link com.pafc.library.log.PLog.Config}
+ * </pre>
  */
 public final class PLog {
 
@@ -17,12 +20,8 @@ public final class PLog {
     public static final int LEVEL_WARN = Log.WARN;
     public static final int LEVEL_ERROR = Log.ERROR;
 
-    public static interface ILogHandler {
-        public void onLog(int level, String tag, String message);
-    }
-
     private static List<Config> sLogConfigs = new ArrayList<>();
-    private static Config sConsoleLogConfig = new Config.Builder().setLogLevel(LEVEL_VERBOSE).setLogVisible(true).setLogHandler(new ILogHandler() {
+    private static Config sConsoleLogConfig = new Config.Builder().setLogLevel(LEVEL_VERBOSE).setLogVisible(true).setLogHandler(new Config.ILogHandler() {
         @Override
         public void onLog(int level, String tag, String message) {
             Log.println(level, tag, message);
@@ -52,6 +51,10 @@ public final class PLog {
     }
 
     public static class Config {
+
+        public static interface ILogHandler {
+            public void onLog(int level, String tag, String message);
+        }
 
         int minimumLogLevel = LEVEL_VERBOSE;
         boolean isLogVisible = true;
@@ -97,11 +100,11 @@ public final class PLog {
         log(LEVEL_VERBOSE, tag, message, null);
     }
 
-    public static void vF(String fmt, String... args) {
+    public static void vF(String fmt, Object... args) {
         log(LEVEL_VERBOSE, null, String.format(fmt, args), null);
     }
 
-    public static void vF(String tag, String fmt, String... args) {
+    public static void vF(String tag, String fmt, Object... args) {
         log(LEVEL_VERBOSE, tag, String.format(fmt, args), null);
     }
 
@@ -113,11 +116,11 @@ public final class PLog {
         log(LEVEL_DEBUG, tag, message, null);
     }
 
-    public static void dF(String fmt, String... args) {
+    public static void dF(String fmt, Object... args) {
         log(LEVEL_DEBUG, null, String.format(fmt, args), null);
     }
 
-    public static void dF(String tag, String fmt, String... args) {
+    public static void dF(String tag, String fmt, Object... args) {
         log(LEVEL_DEBUG, tag, String.format(fmt, args), null);
     }
 
@@ -129,11 +132,11 @@ public final class PLog {
         log(LEVEL_INFO, tag, message, null);
     }
 
-    public static void iF(String fmt, String... args) {
+    public static void iF(String fmt, Object... args) {
         log(LEVEL_INFO, null, String.format(fmt, args), null);
     }
 
-    public static void iF(String tag, String fmt, String... args) {
+    public static void iF(String tag, String fmt, Object... args) {
         log(LEVEL_INFO, tag, String.format(fmt, args), null);
     }
 
@@ -149,11 +152,11 @@ public final class PLog {
         log(LEVEL_WARN, tag, message, throwable);
     }
 
-    public static void wF(String fmt, String... args) {
+    public static void wF(String fmt, Object... args) {
         log(LEVEL_WARN, null, String.format(fmt, args), null);
     }
 
-    public static void wF(String tag, String fmt, String... args) {
+    public static void wF(String tag, String fmt, Object... args) {
         log(LEVEL_WARN, tag, String.format(fmt, args), null);
     }
 
@@ -169,11 +172,11 @@ public final class PLog {
         log(LEVEL_ERROR, tag, message, throwable);
     }
 
-    public static void eF(String fmt, String... args) {
+    public static void eF(String fmt, Object... args) {
         log(LEVEL_ERROR, null, String.format(fmt, args), null);
     }
 
-    public static void eF(String tag, String fmt, String... args) {
+    public static void eF(String tag, String fmt, Object... args) {
         log(LEVEL_ERROR, tag, String.format(fmt, args), null);
     }
 
