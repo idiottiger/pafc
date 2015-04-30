@@ -37,9 +37,9 @@ public final class PLog {
         sConsoleLogConfig.isLogVisible = logVisible;
     }
 
-    public static void setConsoleMinLogLevel(int logLevel) {
+    public static void setConsoleMinimumLogLevel(int logLevel) {
         if (logLevel >= LEVEL_VERBOSE && logLevel <= LEVEL_ERROR) {
-            sConsoleLogConfig.minLogLevel = logLevel;
+            sConsoleLogConfig.minimumLogLevel = logLevel;
         }
     }
 
@@ -53,7 +53,7 @@ public final class PLog {
 
     public static class Config {
 
-        int minLogLevel = LEVEL_VERBOSE;
+        int minimumLogLevel = LEVEL_VERBOSE;
         boolean isLogVisible = true;
         ILogHandler logHandler = null;
 
@@ -67,7 +67,7 @@ public final class PLog {
 
             public Builder setLogLevel(int level) {
                 if (level >= LEVEL_VERBOSE && level <= LEVEL_ERROR) {
-                    mConfig.minLogLevel = level;
+                    mConfig.minimumLogLevel = level;
                 }
                 return this;
             }
@@ -97,6 +97,14 @@ public final class PLog {
         log(LEVEL_VERBOSE, tag, message, null);
     }
 
+    public static void vF(String fmt, String... args) {
+        log(LEVEL_VERBOSE, null, String.format(fmt, args), null);
+    }
+
+    public static void vF(String tag, String fmt, String... args) {
+        log(LEVEL_VERBOSE, tag, String.format(fmt, args), null);
+    }
+
     public static void d(String message) {
         log(LEVEL_DEBUG, null, message, null);
     }
@@ -105,12 +113,28 @@ public final class PLog {
         log(LEVEL_DEBUG, tag, message, null);
     }
 
+    public static void dF(String fmt, String... args) {
+        log(LEVEL_DEBUG, null, String.format(fmt, args), null);
+    }
+
+    public static void dF(String tag, String fmt, String... args) {
+        log(LEVEL_DEBUG, tag, String.format(fmt, args), null);
+    }
+
     public static void i(String message) {
         log(LEVEL_INFO, null, message, null);
     }
 
     public static void i(String tag, String message) {
         log(LEVEL_INFO, tag, message, null);
+    }
+
+    public static void iF(String fmt, String... args) {
+        log(LEVEL_INFO, null, String.format(fmt, args), null);
+    }
+
+    public static void iF(String tag, String fmt, String... args) {
+        log(LEVEL_INFO, tag, String.format(fmt, args), null);
     }
 
     public static void w(String message) {
@@ -125,6 +149,14 @@ public final class PLog {
         log(LEVEL_WARN, tag, message, throwable);
     }
 
+    public static void wF(String fmt, String... args) {
+        log(LEVEL_WARN, null, String.format(fmt, args), null);
+    }
+
+    public static void wF(String tag, String fmt, String... args) {
+        log(LEVEL_WARN, tag, String.format(fmt, args), null);
+    }
+
     public static void e(String message) {
         log(LEVEL_ERROR, null, message, null);
     }
@@ -137,11 +169,20 @@ public final class PLog {
         log(LEVEL_ERROR, tag, message, throwable);
     }
 
+    public static void eF(String fmt, String... args) {
+        log(LEVEL_ERROR, null, String.format(fmt, args), null);
+    }
+
+    public static void eF(String tag, String fmt, String... args) {
+        log(LEVEL_ERROR, tag, String.format(fmt, args), null);
+    }
+
+
     private static void log(int level, String tag, String message, Throwable throwable) {
         final String newTag = tag == null ? createTag() : tag;
         final String newMessage = throwable == null ? message : (message + "\n" + Log.getStackTraceString(throwable));
         for (Config config : sLogConfigs) {
-            if (config.isLogVisible && level >= config.minLogLevel && config.logHandler != null) {
+            if (config.isLogVisible && level >= config.minimumLogLevel && config.logHandler != null) {
                 config.logHandler.onLog(level, newTag, newMessage);
             }
         }

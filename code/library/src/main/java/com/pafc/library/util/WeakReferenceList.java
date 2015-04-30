@@ -11,22 +11,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class WeakList<T> implements List<T> {
+public class WeakReferenceList<T> implements List<T> {
 
     private List<WeakReferenceObject<T>> mWeakList;
 
-    private WeakList() {
+    private WeakReferenceList() {
 
     }
 
-    public static <T> WeakList<T> newWeakArrayList() {
-        final WeakList<T> list = new WeakList<>();
+    public static <T> WeakReferenceList<T> newWeakArrayList() {
+        final WeakReferenceList<T> list = new WeakReferenceList<>();
         list.mWeakList = new ArrayList<>();
         return list;
     }
 
-    public static <T> WeakList<T> newWeakLinkedList() {
-        final WeakList<T> list = new WeakList<>();
+    public static <T> WeakReferenceList<T> newWeakLinkedList() {
+        final WeakReferenceList<T> list = new WeakReferenceList<>();
         list.mWeakList = new LinkedList<>();
         return list;
     }
